@@ -14,8 +14,8 @@ $ rbenv exec gem install bundler
 - プロジェクトのフォルダのみにGemをインストールする
 
 ```
-$ echo 'source "http://rubygems.org"' >> Gemfile
-$ echo 'gem "rails", "4.2.3"' >> Gemfile
+$ echo "source 'http://rubygems.org'" >> Gemfile
+$ echo "gem 'rails', '4.2.3'" >> Gemfile
 $ bundle install --path vendor/bundle
 ```
 `※ nokogiriが結構インストールするのに時間かかる`
@@ -76,7 +76,6 @@ config.i18n.default_locale = :ja
 `config/locales/devise.ja.yml`を作成
 `config/locales/devise.ja.yml`に日本語に翻訳された辞書をセット
 
-参考
 [参考辞書リストはこちら](https://gist.github.com/kaorumori/7276cec9c2d15940a3d93c6fcfab19f3)
 
 
@@ -85,3 +84,41 @@ config.i18n.default_locale = :ja
 `config/locales/ja.yml`を作成
 
 [参考辞書リストはこちら](https://github.com/svenfuchs/rails-i18n/blob/master/rails/locale/ja.yml)
+
+
+# 写真投稿用の機能を作成
+
+- controller作成
+```
+$ rails g controller picture index
+```
+
+- model作成
+```
+$ rails g model picture photo:string comment:text
+```
+
+## 画像アップローダーとしてcarrierwaveとmini_magickをインストールする
+
+- homebrewにimagemagickをインストールする（すでに入っていれば必要ない）
+```
+$ brew update 
+$ brew install imagemagick
+```
+
+- carrierwaveとmini_magickをインストールする
+```
+$ echo "gem 'carrierwave'" >> Gemfile
+$ echo "gem 'mini_magick'" >> Gemfile
+$ bundle install --path vendor/bundle
+```
+
+- carrierwaveの初期設定を行う。
+```
+$ rails generate uploader Photo
+```
+
+- models/picture.rbにcarrierwave用の設定を行う
+```
+mount_uploader :photo, PhotoUploader
+```
