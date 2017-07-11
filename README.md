@@ -122,3 +122,38 @@ $ rails generate uploader Photo
 ```
 mount_uploader :photo, PhotoUploader
 ```
+
+- 画像のリサイズ
+`app/uploaders/photo_uploader.rb`に以下を記載
+```
+include CarrierWave::MiniMagick
+process resize_to_limit: [600, 600]
+```
+
+- 投稿するviewに以下を記載
+`app/views/picture/_form.html.erb`
+```
+<%= f.file_field :photo %>
+<%= f.hidden_field :photo_cache %><!-- バリデーヂョンエラー時の対策 -->
+```
+
+- 一覧画面に投稿画像を表示
+`app/views/picture/index.html.erb`
+```
+<% @pictures.each do |picture| %>
+  <%= image_tag(picture.photo, alt: '') %>
+  <p><%= picture.comment %></p>
+<% end %>
+```
+
+
+
+
+
+
+
+
+# その他gem
+
+- gem 'pry-rails'
+- gem 'better_errors'

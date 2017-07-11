@@ -1,0 +1,39 @@
+<%= form_for(@picture, url:picture_index_path) do |f| %>
+
+  <% if @picture.errors.any? %>
+    <div class="alert alert-danger">
+      <p><%= @picture.errors.full_messages.count %>件のエラーがあります。</p>
+      <ul>
+        <% @picture.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="panel panel-info">
+    <div class="panel-heading text-center">
+      <% if isEdit %>
+        <%= f.label :投稿の編集 %>
+      <% else %>
+        <%= f.label :写真投稿 %>
+      <% end %>
+    </div>
+    <div class="panel-body">
+      <%= f.file_field :photo %>
+      <%= f.hidden_field :photo_cache %><!-- バリデーヂョンエラー時の対策 -->
+      <%= f.text_area :comment, rows: 6, class: 'form-control js-text-area' %>
+      <p class="text-right"><span class="js-count-text">0</span> / 140</p>
+      <div class="text-center">
+        <%= f.submit :投稿, class: 'btn btn-primary' %>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<p class="text-right">
+  <%= link_to picture_index_path do %>
+    <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+    <span>一覧に戻る</span>
+  <% end %>
+</p>
