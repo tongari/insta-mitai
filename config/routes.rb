@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
+
   resources :picture, only: [:index, :new, :create, :edit, :update ,:destroy]
   devise_for :users
-  root 'picture#index'
+
+  root 'application#index'
 
 
   # The priority is based upon order of creation: first created -> highest priority.

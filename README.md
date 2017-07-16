@@ -134,7 +134,7 @@ process resize_to_limit: [600, 600]
 `app/views/picture/_form.html.erb`
 ```
 <%= f.file_field :photo %>
-<%= f.hidden_field :photo_cache %><!-- バリデーヂョンエラー時の対策 -->
+<%= f.hidden_field :photo_cache %><!-- バリデーションエラー時の対策 -->
 ```
 
 - 一覧画面に投稿画像を表示
@@ -146,9 +146,36 @@ process resize_to_limit: [600, 600]
 <% end %>
 ```
 
+- 一連のCURD処理を作成
 
+`〜省略〜`
 
+- 画像アップロード時にプレビューできるようにjsを書く
 
+`app/assets/javascripts/picture.js`
+```
+var picUpLoadButton = document.querySelector('.js-picUpLoadButton');
+var previewImg = document.querySelector('.js-previewPhoto');
+
+picUpLoadButton && picUpLoadButton.addEventListener('change', function (e) {
+  var file = e.target.files[0];
+  var reader = new FileReader();
+
+  reader.onload = (function(file) {
+    return function(e) {
+      previewImg.src = e.target.result;
+    };
+  })(file);
+  reader.readAsDataURL(file);
+});
+```
+
+`app/views/picture/_form.html.erb`
+```
+<div class="picture-preview">
+  <%= image_tag(@picture.photo, alt: '', class: 'js-previewPhoto') %>
+</div>
+```
 
 
 
