@@ -3,6 +3,10 @@ Rails.application.routes.draw do
   resources :picture, only: [:index, :new, :create, :edit, :update ,:destroy]
   devise_for :users
 
+  if Rails.env.development?
+    mount LetterOpenerWeb::Engine, at: '/letter_opener'
+  end
+
   root 'application#index'
 
 
