@@ -256,6 +256,29 @@ $ rails g migration AddUserIdToPictures user_id:integer
 has_many :pictures
 ```
 
+# 自分の投稿にだけ、編集と削除をさせる
+
+`app/views/picture/index.html.erb`
+```
+<% if picture.user_id == @userId %>
+  <%= link_to '編集', edit_picture_path(picture.id) %>
+  <%= link_to picture_path(picture.id), method: :delete ,data: { confirm: '本当に削除していいですか？' } do %>
+      削除
+  <% end %>
+<% end %>
+```
+
+`app/controllers/picture_controller.rb`
+```
+def checkMatchUser
+  if current_user.id != @picture.user_id
+    redirect_to picture_index_path
+  end
+end
+```
+など
+
+
 # その他gem
 
 - gem 'pry-rails'
