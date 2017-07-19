@@ -214,7 +214,7 @@ devise :database_authenticatable, :registerable,
 - メール認証に必要なカラムを追加
 
 ```
-rails g migration add_confirmable_to_devise
+$ rails g migration add_confirmable_to_devise
 ```
 
 - 上記コマンドで生成されたマイグレーションファイルを書き換える
@@ -242,8 +242,19 @@ end
 migration fileを編集後`rake db:migrate`を実行
 もし、すでにユーザを新規登録していた場合はRailsコンソールを立ち上げて`User.delete_all`で全部削除
 
+# アソシエーション
 
+- Pictureモデルに`user_id`カラムを追加
+```
+$ rails g migration AddUserIdToPictures user_id:integer
+```
 
+- UserモデルのレコードがPictureモデルのレコードを複数もつことを定義する
+
+`app/models/user.rb`
+```
+has_many :pictures
+```
 
 # その他gem
 
