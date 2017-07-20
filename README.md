@@ -288,6 +288,7 @@ $ rake db:migrate
 ```
 
 - Deviseのストロングパラメータにnameを追加
+
 `app/controllers/application_controller.rb`
 以下を追加
 ```
@@ -306,6 +307,7 @@ protected
 ```
 
 - 新規ユーザ登録画面に名前の入力用のフィールドを追加
+
 `app/views/devise/registrations/new.html.erb`
 ```
 <div class="field">
@@ -319,6 +321,7 @@ protected
 ```
 
 - ユーザ編集画面に名前の入力用のフィールドを追加
+
 `app/views/devise/registrations/edit.html.erb`
 ```
 <div class="field">
