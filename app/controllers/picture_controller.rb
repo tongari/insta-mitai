@@ -5,7 +5,9 @@ class PictureController < ApplicationController
 
   def index
     @pictures = Picture.all
-    @userId = current_user.id
+    @user = User.all
+    binding.pry
+    @curUserId = current_user.id
   end
 
   def new
