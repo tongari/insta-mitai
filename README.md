@@ -340,6 +340,30 @@ protected
 <% end %>
 ```
 
+# Modelのバリエーションエラー項目を日本語化する
+
+- 辞書ファイル作成 
+```
+$ touch config/locales/model.ja.yml
+```
+```
+ja:
+  activerecord:
+    models:
+      picture: "写真投稿"
+      user: "ユーザー"
+    attributes:
+      picture:
+        photo: "写真"
+        comment: "ひとこと"
+      user:
+        name: "名前"
+        email: "メールアドレス"
+        current_password: "現在のパスワード"
+        password: "パスワード"
+        password_confirmation: "確認用パスワード"
+        remember_me: "ログインを記憶"
+```
 
 # その他gem
 

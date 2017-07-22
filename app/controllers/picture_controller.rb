@@ -4,9 +4,8 @@ class PictureController < ApplicationController
   before_action :checkMatchUser, only:[:edit, :destroy]
 
   def index
-    @pictures = Picture.all
+    @pictures = Picture.order('updated_at DESC')
     @user = User.all
-    binding.pry
     @curUserId = current_user.id
   end
 
