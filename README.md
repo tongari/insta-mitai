@@ -481,6 +481,49 @@ user.save
 config.consider_all_requests_local = false(trueからfalseに)
 ```
 
+# 本番環境（heroku）にSendGridをいれる
+
+- プラグインを導入
+```
+$ heroku login
+$ heroku create
+$ heroku addons:create sendgrid:starter
+```
+
+- 設定用にSendgridの情報を取得
+```
+$ heroku config:get SENDGRID_USERNAME
+$ heroku config:get SENDGRID_PASSWORD
+```
+
+- 環境変数の設定
+
+```
+$ heroku config:set SENDGRID_USERNAME=(調べたSENDGRID_USERNAME)
+$ heroku config:set SENDGRID_PASSWORD=(調べたSENDGRID_PASSWORD)
+$ heroku config
+```
+
+- `config/environments/production.rb`を以下に変更
+
+```
+config.action_mailer.default_url_options = { host: '自分のHerokuアプリのドメイン' }
+ActionMailer::Base.delivery_method = :smtp
+ActionMailer::Base.smtp_settings =
+{
+ user_name: ENV['SENDGRID_USERNAME'],
+ password: ENV['SENDGRID_PASSWORD'],
+ domain: "heroku.com",
+ address: "smtp.sendgrid.net",
+ port: 587,
+ authentication: :plain,
+ enable_starttls_auto: true
+}
+```
+
+- `config/initializers/devise.rb`の記述を変更
+
+config.mailer_senderの値を`noreply@yourdomain`に変更する。
 
 # その他gem
 
