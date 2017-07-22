@@ -468,6 +468,20 @@ user.admin = true
 user.save
 ```
 
+
+# エラー系のページを作成
+
+- 適宜エラーページを作成する
+`自由に作る`
+
+- 開発環境で本番環境と同様のエラー画面を表示させるために、以下の設定をする
+
+`config/environments/development.rb`
+```
+config.consider_all_requests_local = false(trueからfalseに)
+```
+
+
 # その他gem
 
 - gem 'pry-rails'
