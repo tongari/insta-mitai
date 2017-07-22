@@ -47,3 +47,5 @@ end
 gem 'devise'
 gem 'carrierwave'
 gem 'mini_magick'
+gem 'rails_admin'
+gem 'cancancan'

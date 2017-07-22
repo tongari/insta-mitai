@@ -365,6 +365,109 @@ ja:
         remember_me: "ログインを記憶"
 ```
 
+# 管理画面を作成する
+
+### RailsAdminを導入する
+
+- RailsAdminをインストールする
+
+```
+$ echo "gem 'rails_admin'" >> Gemfile
+$ bundle install --path vendor/bundle
+$ rails g rails_admin:install
+```
+
+`/admin`でアクセスしてみると管理画面を確認できる
+
+- RailsAdminを日本語化する
+
+```
+$ touch config/locales/rails_admin.ja.yml
+```
+
+`参考url`
+
+[https://gist.github.com/mshibuya/1662352](https://gist.github.com/mshibuya/1662352)
+
+- 管理者のみ管理画面へアクセスできるようにする
+
+usersテーブルに`admin`カラムを追加する
+```
+$ rails g migration AddAdminToUser admin
+```
+
+- 作成した、migration fileを編集
+```
+class AddAdminToUser < ActiveRecord::Migration
+  def change
+    add_column :users, :admin, :boolean, :default => false
+  end
+end
+```
+
+- マイグレーションで適用 
+```
+$ rake db:migrate
+```
+
+### adminカラムがtrueの場合のみ管理画面へアクセスできるようにする
+
+- `cancancan`をインストールする
+
+```
+$ echo "gem 'cancancan'" >> Gemfile
+$ bundle install --path vendor/bundle
+```
+- cancancanの初期設定をする
+```
+$ rails g cancan:ability
+```
+
+- adminカラムがtrueのユーザのみ、管理画面にアクセスできるように設定
+
+`app/models/ability.rb`に以下を追記
+```
+def initialize(user)
+  # >>>>>>ここから
+  if user && user.admin?
+    can :access, :rails_admin   # grant access to rails_admin
+    can :manage, :all           # allow superadmins to do anything
+  end
+  # =====ここまでを追記
+  # 省略
+end
+```
+
+`config/initializers/rails_admin.rb`の`Devise`と`Cancan`のとこのコメントを外す
+
+```
+RailsAdmin.config do |config|
+
+  ### Popular gems integration
+
+  # == Devise ==
+  config.authenticate_with do
+    warden.authenticate! scope: :user
+  end
+  config.current_user_method(&:current_user)
+
+  # == Cancan ==
+  config.authorize_with :cancan
+
+  省略
+  end
+end
+```
+
+- 適当なユーザを管理者にする
+
+```
+$ rails c
+user = User.find({適当なユーザID})
+user.admin = true
+user.save
+```
+
 # その他gem
 
 - gem 'pry-rails'
