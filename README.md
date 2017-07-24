@@ -525,6 +525,131 @@ ActionMailer::Base.smtp_settings =
 
 config.mailer_senderの値を`noreply@yourdomain`に変更する。
 
+
+# SNSログインの実装
+
+- omniauthをインストール
+
+```
+$ echo "gem 'omniauth'" >> Gemfile
+$ echo "gem 'omniauth-twitter'" >> Gemfile
+$ echo "gem 'omniauth-facebook'" >> Gemfile
+$ bundle install --path vendor/bundle
+```
+
+- `:omniauthable`の定義を有効にする
+
+`app/models/user.rb`
+```
+class User < ActiveRecord::Base
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable and :omniauthable
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :trackable, :validatable, :confirmable, :omniauthable
+# 省略
+end
+```
+
+- ルーティング定義を追加
+
+`/config/routes.rb`
+
+```
+Rails.application.routes.draw do
+  devise_for :users, controllers: {
+    omniauth_callbacks: 'users/omniauth_callbacks'
+  }
+end
+```
+
+- Facebookのアプリ登録
+
+https://developers.facebook.com/
+
+`開発環境用`と`本番用`２つ作成
+
+```
+本番環境（production)のみ、アプリレビューより ☓☓☓を公開しますか？をはいにする
+```
+
+- Twitterのアプリ登録
+
+https://dev.twitter.com/ 
+
+`開発環境用`と`本番用`２つ作成
+
+
+- `config/initializers/devise.rb`に以下を追記
+
+```
+Devise.setup do |config|
+  if Rails.env.production?
+    config.omniauth :facebook, ENV['FACEBOOK_ID_PROD'], ENV['FACEBOOK_SECRET_PROD'], scope: 'email', display: 'popup', info_fields: 'name, email'
+    config.omniauth :twitter, ENV['TWITTER_ID_PROD'], ENV['TWITTER_SECRET_PROD'], scope: 'email', display: 'popup', info_fields: 'name, email'
+  else
+    config.omniauth :facebook, ENV['FACEBOOK_ID_DEV'], ENV['FACEBOOK_SECRET_DEV'], scope: 'email', display: 'popup', info_fields: 'name, email'
+    config.omniauth :twitter, ENV['TWITTER_ID_DEV'], ENV['TWITTER_SECRET_DEV'], scope: 'email', display: 'popup', info_fields: 'name, email'
+  end
+end
+```
+
+### 開発環境用において、dotenvを使用して環境変数化を行う（※.envをgithubにあがらないように.gitignoreに必ず記載する！！！）
+
+- dotenvをインストール
+
+`Gemfile`
+```
+group :development do
+省略
+  gem 'dotenv-rails'
+end
+```
+
+```
+$ bundle install --path vendor/bundle
+```
+- dotenvにIDとAppSecretを記述（開発環境用）
+
+`.env`
+```
+FACEBOOK_ID_DEV={登録したアプリのID}
+FACEBOOK_SECRET_DEV={登録したアプリのapp secret}
+TWITTER_ID_DEV={登録したアプリのID}
+TWITTER_SECRET_DEV={登録したアプリのapp secret}
+```
+
+- herokuにもIDとAppSecretを記述（本番環境用）
+
+```
+$ heroku config:add FACEBOOK_ID_PROD={登録したアプリのID}
+$ heroku config:add FACEBOOK_SECRET_PROD={登録したアプリのapp secret}
+$ heroku config:add TWITTER_ID_PROD={登録したアプリのID}
+$ heroku config:add TWITTER_SECRET_PROD={登録したアプリのapp secret}
+```
+
+- SNSログインで必要なカラムをUsersテーブルに追加する
+
+```
+$ rails g migration AddOmniauthColumnsToUsers uid provider image_url
+```
+
+```
+class AddOmniauthColumnsToUsers < ActiveRecord::Migration
+  def change
+    add_column :users, :uid, :string, null: false, default: ""
+    add_column :users, :provider, :string, null: false, default: ""
+    add_column :users, :image_url, :string
+
+    add_index :users, [:uid, :provider], unique: true
+  end
+end
+```
+
+- マイグレーション
+
+オプションで`null: false`を設定したので、`rake db:migrate`コマンドではなく`rake db:migrate:reset`コマンドを実行
+
+
 # その他gem
 
 - gem 'pry-rails'

@@ -43,9 +43,13 @@ group :development, :test do
   gem 'pry-rails'
   gem 'better_errors'
   gem 'letter_opener_web'
+  gem 'dotenv-rails'
 end
 gem 'devise'
 gem 'carrierwave'
 gem 'mini_magick'
 gem 'rails_admin'
 gem 'cancancan'
+gem 'omniauth'
+gem 'omniauth-twitter'
+gem 'omniauth-facebook'

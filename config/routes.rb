@@ -2,7 +2,9 @@ Rails.application.routes.draw do
 
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   resources :picture, only: [:index, :new, :create, :edit, :update ,:destroy]
-  devise_for :users
+  devise_for :users, controllers: {
+    omniauth_callbacks: 'users/omniauth_callbacks'
+  }
 
   if Rails.env.development?
     mount LetterOpenerWeb::Engine, at: '/letter_opener'
