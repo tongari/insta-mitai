@@ -649,6 +649,22 @@ end
 
 オプションで`null: false`を設定したので、`rake db:migrate`コマンドではなく`rake db:migrate:reset`コマンドを実行
 
+- FacebookとTwitterのアクションを作成する
+
+```
+$ mkdir app/controllers/users
+$ rails g controller users::OmniauthCallbacks
+```
+
+- OmniauthCallbacksControllerの継承元をApplicationControllerからDeviseのコールバックコントローラへ書き換える
+
+`app/controllers/users/omniauth_callbacks_controller.rb`
+
+```
+class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
+end
+```
+
 
 # その他gem
 
