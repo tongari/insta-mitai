@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   resources :picture, only: [:index, :new, :create, :edit, :update ,:destroy]
   devise_for :users, controllers: {
+    registrations: 'users/registrations',
     omniauth_callbacks: 'users/omniauth_callbacks'
   }
 
