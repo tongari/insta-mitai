@@ -1,15 +1,25 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <title>InstaMitai</title>
   <%= stylesheet_link_tag    'application', media: 'all' %>
   <%= csrf_meta_tags %>
 </head>
 <body>
-<header>
-  <%= link_to 'ログアウト', destroy_user_session_path, method: :delete ,data: { confirm: 'ログアウトしますか？' } %>
+<% if user_signed_in? %>
+<header class="header">
+  <p class="header__logo">
+    <a href="/"><img src="<%= asset_path "logo.svg" %>"></a>
+  </p>
+  <%= link_to 'マイページ', edit_user_registration_path %>
+  <%= link_to 'ログアウト', destroy_user_session_path, method: :delete ,data: { confirm: 'ログアウトしますか？' }, class: 'header__logOut' %>
 </header>
-<%= yield %>
+<% end %>
+<div class="page">
+  <%= yield %>
+</div>
+
 <%= javascript_include_tag 'application' %>
 </body>
 </html>

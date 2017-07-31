@@ -1,3 +1,46 @@
 // Place all the styles related to the users::registrations controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.regist{
+  max-width: 600px;
+  min-width: 300px;
+  margin: 40px auto auto auto;
+  padding: 0 40px;
+  text-align: center;
+
+  h2{
+    //font-size: 14px;
+  }
+
+  &__logo{
+    width: 150px;
+    margin: 0 auto;
+  }
+
+  &__formControl{
+    margin-bottom: 10px;
+  }
+
+  &__toolBox{
+    margin-top: 15px;
+  }
+
+  &__notice{
+    margin-bottom: 15px;
+  }
+
+  &__label{
+    color: #999;
+  }
+
+  &__profile{
+    max-width: 60px;
+    border-radius: 100%;
+    background-color: #ccc;
+  }
+
+  input[type="file"]{
+    display: inline-block;
+  }
+}

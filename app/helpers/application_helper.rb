@@ -5,6 +5,6 @@ module ApplicationHelper
     else
       img_url = 'def_profile.svg'
     end
-    image_tag(img_url, alt: user.name)
+    image_tag(img_url, alt: user.name, class:'regist__profile')
   end
 end

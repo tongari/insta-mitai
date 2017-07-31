@@ -13,3 +13,32 @@
  *= require_tree .
  *= require_self
  */
+
+.header{
+  position: fixed;
+  top:0;
+  left: 0;
+  width: 100%;
+  padding: 10px;
+  background-color: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.header__logo{
+  text-align: center;
+}
+
+.header__logo > a{
+  display: inline-block;
+  width: 120px;
+}
+
+.header__logOut{
+  position: absolute;
+  top:25px;
+  right: 10px;
+}
+
+.page{
+  padding-top: 80px;
+}

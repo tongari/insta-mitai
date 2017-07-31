@@ -888,6 +888,15 @@ providerが空だった時は、superでupdate_with_passwordに記述されて�
 providerが存在する場合は、current_passwordを削除してパスワードなしでも更新できるようにする。
 
 
+# viewを整える
+
+- bootstrap導入
+
+```bash
+$ echo "gem 'twitter-bootstrap-rails'" >> Gemfile
+$ rails generate bootstrap:install static
+```
+
 # その他gem
 
 - gem 'pry-rails'
