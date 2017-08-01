@@ -11,7 +11,7 @@
     </div>
   <% end %>
 
-  <div class="panel panel-info">
+  <div class="panel panel-default">
     <div class="panel-heading text-center">
       <% if isEdit %>
         <%= f.label :投稿の編集 %>
@@ -23,7 +23,7 @@
       <div class="picture-preview">
         <%= image_tag(@picture.photo, alt: '', class: 'js-previewPhoto') %>
       </div>
-      <%= f.file_field :photo , class:'js-picUpLoadButton' %>
+      <%= f.file_field :photo , class:'picture__upLoader js-picUpLoadButton' %>
       <%= f.hidden_field :photo_cache %><!-- バリデーションエラー時の対策 -->
       <%= f.text_area :comment, rows: 6, class: 'form-control js-text-area' %>
       <p class="text-right"><span class="js-count-text">0</span> / 140</p>

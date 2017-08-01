@@ -6,7 +6,56 @@
   max-width: 300px;
 
   > img {
+    display: none;
     width: 100%;
+  }
+
+  .is-show{
+    display: block;
+  }
+
+}
+
+.picture{
+  max-width: 600px;
+  min-width: 300px;
+  margin: 40px auto auto auto;
+  padding: 0 40px;
+  text-align: center;
+
+  &__upLoader{
+    display: inline-block;
+    margin: 20px 0;
+  }
+}
+
+.pictureList{
+  max-width: 600px;
+  min-width: 300px;
+  margin: 40px auto auto auto;
+
+  &__photo{
+    text-align: center;
+    margin: 20px 0 40px 0;
+
+    > img{
+      width: 100%;
+    }
+  }
+
+  &__user{
+    display: table;
+    > * {
+      display: table-cell;
+    }
+
+    &Thmub{
+      width: 60px;
+    }
+
+    &Comment{
+      padding-left: 10px;
+    }
   }
 
 }

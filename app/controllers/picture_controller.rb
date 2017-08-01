@@ -5,7 +5,7 @@ class PictureController < ApplicationController
 
   def index
     @pictures = Picture.order('updated_at DESC')
-    @user = User.all
+    @users = User.all
     @curUserId = current_user.id
   end
 

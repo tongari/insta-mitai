@@ -3,13 +3,23 @@
   <%= link_to '投稿する', new_picture_path %>
 </p>
 
-<ul>
+<ul class="pictureList">
   <% @pictures.each do |picture| %>
-    <li>
-      <%= image_tag(picture.photo, alt: '') %>
+    <li class="well">
+
+      <div class="pictureList__user">
+        <div class="pictureList__userThumb">
+          <% user = @users.find(picture.user_id) %>
+          <%= profile_img(user) %>
+        </div>
+        <p class="pictureList__userComment"><%= @users.find(picture.user_id).name %></p>
+      </div>
+
+      <div class="pictureList__photo">
+        <%= image_tag(picture.photo, alt: '') %>
+      </div>
       <p><%= picture.comment %></p>
-      <p>-------</p>
-      <p><%= @user.find(picture.user_id).name %></p>
+
 
       <% if picture.user_id == @curUserId %>
         <%= link_to '編集', edit_picture_path(picture.id) %>
