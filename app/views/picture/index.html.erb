@@ -1,12 +1,16 @@
-<p><%= notice %></p>
-<p>
-  <%= link_to '投稿する', new_picture_path %>
+<% if notice %>
+  <p class="pictureList__notice alert alert-success"><%= notice %></p>
+<% else %>
+<% end %>
+
+<p class="text-center">
+  <%= link_to '投稿する', new_picture_path, class: 'btn btn-default' %>
 </p>
 
 <ul class="pictureList">
   <% @pictures.each do |picture| %>
     <li class="well">
-
+      <p class="text-right"><%= picture.updated_at.to_s(:default) %></p>
       <div class="pictureList__user">
         <div class="pictureList__userThumb">
           <% user = @users.find(picture.user_id) %>
@@ -20,12 +24,16 @@
       </div>
       <p><%= picture.comment %></p>
 
-
       <% if picture.user_id == @curUserId %>
-        <%= link_to '編集', edit_picture_path(picture.id) %>
-        <%= link_to picture_path(picture.id), method: :delete ,data: { confirm: '本当に削除していいですか？' } do %>
-            削除
-        <% end %>
+          <div class="text-right">
+            <%= link_to edit_picture_path(picture.id) do %>
+                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+            <% end %>
+            <%= link_to picture_path(picture.id), method: :delete ,data: { confirm: '本当に削除していいですか？' } do %>
+                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+            <% end %>
+          </div>
+
       <% end %>
     </li>
 

@@ -12,8 +12,11 @@
   <p class="header__logo">
     <a href="/"><img src="<%= asset_path "logo.svg" %>"></a>
   </p>
-  <%= link_to 'マイページ', edit_user_registration_path %>
-  <%= link_to 'ログアウト', destroy_user_session_path, method: :delete ,data: { confirm: 'ログアウトしますか？' }, class: 'header__logOut' %>
+  <div class="header__tool">
+    <%= link_to 'マイページ', edit_user_registration_path %>
+    <%= link_to 'ログアウト', destroy_user_session_path, method: :delete ,data: { confirm: 'ログアウトしますか？' }, class: '' %>
+
+  </div>
 </header>
 <% end %>
 <div class="page">
