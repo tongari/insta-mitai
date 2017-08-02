@@ -45,11 +45,12 @@
 
   &__user{
     display: table;
+    width: 100%;
     > * {
       display: table-cell;
     }
 
-    &Thmub{
+    &Thumb{
       width: 60px;
     }
 

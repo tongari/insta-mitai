@@ -1,22 +1,21 @@
 <% if notice %>
-  <p class="pictureList__notice alert alert-success"><%= notice %></p>
+    <p class="pictureList__notice alert alert-success"><%= notice %></p>
 <% else %>
 <% end %>
-
 <p class="text-center">
   <%= link_to '投稿する', new_picture_path, class: 'btn btn-default' %>
 </p>
 
-<ul class="pictureList">
+<div class="pictureList">
   <% @pictures.each do |picture| %>
-    <li class="well">
-      <p class="text-right"><%= picture.updated_at.to_s(:default) %></p>
+    <div class="well">
       <div class="pictureList__user">
         <div class="pictureList__userThumb">
           <% user = @users.find(picture.user_id) %>
           <%= profile_img(user) %>
         </div>
         <p class="pictureList__userComment"><%= @users.find(picture.user_id).name %></p>
+        <p class="text-right"><%= picture.updated_at.to_s(:default) %></p>
       </div>
 
       <div class="pictureList__photo">
@@ -35,8 +34,8 @@
           </div>
 
       <% end %>
-    </li>
+    </div>
 
   <% end %>
-</ul>
+</div>
 

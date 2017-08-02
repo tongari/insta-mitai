@@ -14,3 +14,20 @@ picUpLoadButton && picUpLoadButton.addEventListener('change', function (e) {
   })(file);
   reader.readAsDataURL(file);
 });
+
+
+var textArea = document.querySelector('.js-text-area');
+var textCounter = document.querySelector('.js-count-text');
+
+var countUP = function() {
+  var len = textArea.value.length;
+  if(len > 140) textCounter.style.color = "#f00";
+  else textCounter.style.color = "";
+  textCounter.textContent = len;
+};
+
+textArea && (function () {
+  countUP();
+  textArea.addEventListener('keyup', countUP);
+  textArea.addEventListener('keydown', countUP);
+})();
